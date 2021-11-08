@@ -53,4 +53,4 @@ fi
 
 # Actual Script
 touch $values_file
-tanzu package available get $package_name/$package_version --values-schema -o yaml | yq .[] | jq '"\(.key) === \"\(.default)\""' -r | sed 's/<nil>//g' - | sed 's/ === / --value /g' - | sed 's/^/yaml-set -g /g' - | sed "s/$/ $values_file/g" - | bash
+tanzu package available get $package_name/$package_version --values-schema -o json | jq .[] | jq '"\(.key) === \"\(.default)\""' -r | sed 's/<nil>//g' - | sed 's/ === / --value /g' - | sed 's/^/yaml-set -g /g' - | sed "s/$/ $values_file/g" - | bash
